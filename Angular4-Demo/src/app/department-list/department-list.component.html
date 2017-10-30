@@ -1,0 +1,159 @@
+<!--<h3>Add Department</h3>
+<form (ngSubmit)="onSubmit()" #todoForm="ngForm">
+  <div class="form-inline">
+    <div class="col-auto">
+      Country: <input type="text"  class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="" 
+      id="country" [(ngModel)]="model.country" 
+      name="country" #country="ngModel">
+    </div>
+    <div class="col-auto">
+      <input type="text"  class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="" 
+      id="departmentCode" [(ngModel)]="model.departmentCode" 
+      name="departmentCode" #departmentCode="ngModel">
+    </div>
+    <div class="col-auto">
+      <input type="text"  class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="" 
+      id="departmentName" [(ngModel)]="model.departmentName" 
+      name="departmentName" #departmentName="ngModel">
+    </div>   
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+<br />-->
+
+<!--Add Department Block-->
+<div class="container">
+<div class="card" *ngIf = "showDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Add/Edit Department</h3>
+    <div class="card-block">
+      <form [formGroup]="departmentForm" (ngSubmit)="addDepartment(departmentForm.value)">
+     <div style = "margin : 20px;">
+      <div class="form-inline">
+
+        <table width="100%" style="table-layout: fixed">
+          <tr>
+            <td>Country &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"   formControlName="country"/></td>
+            <td>Department Code &nbsp;&nbsp; <input type="text"class="form-control  mb-2 mr-sm-2 mb-sm-0" formControlName="departmentCode"/></td>
+            <td>Department Name &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"  formControlName="departmentName"/></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+              {{departmentCodeError}}
+            </div></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+            {{departmentNameError}}
+          </div></td>
+          </tr>
+        </table>
+      </div>
+     </div>
+     
+        <div style="margin-top: 20px;  margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!departmentForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        
+     </div>
+        </form>
+      </div>
+    </div>
+
+  <div class="card" *ngIf = "showDepartmentDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Add/Edit Department</h3>
+    <div class="card-block">
+      <form [formGroup]="departmentForm" (ngSubmit)="editDepartmentDetails(departmentForm.value)">
+        <div class="form-inline">
+
+          <table width="100%" style="table-layout: fixed">
+            <tr>
+              <td>Country &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"   formControlName="country"/></td>
+              <td>Department Code &nbsp;&nbsp; <input type="text"class="form-control  mb-2 mr-sm-2 mb-sm-0" formControlName="departmentCode"/></td>
+              <td>Department Name &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"  formControlName="departmentName"/></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+                {{departmentCodeError}}
+              </div></td>
+              <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+                {{departmentNameError}}
+              </div></td>
+            </tr>
+          </table>
+        </div>
+        <div style="margin-top: 20px; margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!departmentForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!--New Datatable-->
+<div class="container">
+  <div class="card ">
+    <div class="card-block">
+      <button type="button" class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin :  20px;" (click)="toggleDetails()">Add Department
+</button>
+
+<div style="margin: 20px;">
+<div class="row ">
+
+  <div class="form-inline " style="margin-bottom: 10px; margin-left: 72%">
+<span class="mb-2 mr-sm-2 mb-sm-0">Search: </span><input class="form-control" type="text" name="search" [(ngModel)]="filter" >
+
+</div>
+</div>
+<div class="row">
+  <table class="table  table-bordered" style="table-layout: fixed">
+    <thead>
+      <tr>  
+        
+        <th (click)="sort('country')">Country
+          <span class="fa fa-sort" *ngIf="key =='country'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('departmentCode')">Department Code
+          <span class="fa fa-sort" *ngIf="key =='departmentCode'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('departmentName')">Department Name
+          <span class="fa fa-sort" *ngIf="key =='departmentName'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th style="width: 20%">Edit</th>
+</tr>
+</thead>
+<tbody>
+  <tr *ngFor="let department of departments | async | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+    <td>{{department.country}}</td>
+    <td>{{department.departmentCode}}</td>
+    <td>{{department.departmentName}}</td>
+    <td>
+      <button class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; " (click)="editDetails(department)">
+<i class="fa fa-edit"></i>
+</button>
+</td>
+</tr>
+</tbody>
+
+</table>
+<div class="row">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+

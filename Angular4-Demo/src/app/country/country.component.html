@@ -1,0 +1,140 @@
+
+
+<!--Add Country Block-->
+<div class="container">
+<div class="card" *ngIf = "showAddCountryDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Add Country</h3>
+    <div class="card-block">
+      <form [formGroup]="countryForm" (ngSubmit)="addCountry(countryForm.value)">
+     <div style = "margin : 20px;">
+      <div class="form-inline">
+
+        <table width="100%" style="table-layout: fixed">
+          <tr>
+            <td>Country Code&nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"   formControlName="countryCode"/></td>
+            <td>Country Name &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"  formControlName="countryName"/></td>
+          </tr>
+          <!--<tr>
+            <td></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+              {{departmentCodeError}}
+            </div></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+            {{departmentNameError}}
+          </div></td>
+          </tr>-->
+        </table>
+      </div>
+     </div>
+     
+        <div style="margin-top: 20px;  margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!countryForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        
+     </div>
+        </form>
+      </div>
+    </div>
+  <!-- Edit Country-->
+  <div class="card" *ngIf = "showEditCountryDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Edit Country</h3>
+    <div class="card-block">
+      <form [formGroup]="countryForm" (ngSubmit)="editCountry(countryForm.value)">
+        <div class="form-inline">
+
+          <table width="100%" style="table-layout: fixed">
+            <tr>
+              <td>Country Code&nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"   formControlName="countryCode"/></td>
+              <td>Country Name &nbsp;&nbsp; <input type="text" class="form-control  mb-2 mr-sm-2 mb-sm-0"  formControlName="countryName"/></td>
+            </tr>
+            <!--<tr>
+              <td></td>
+              <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+                {{departmentCodeError}}
+              </div></td>
+              <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+                {{departmentNameError}}
+              </div></td>
+            </tr>-->
+          </table>
+        </div>
+        <div style="margin-top: 20px; margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!countryForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!--New Datatable-->
+<div class="container">
+  <div class="card ">
+    <div class="card-block">
+      <button type="button" class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin :  20px;" (click)="toggleDetails()">Add Country
+</button>
+
+<div style="margin: 20px;">
+<div class="row ">
+
+  <div class="form-inline " style="margin-bottom: 10px; margin-left: 72%">
+<span class="mb-2 mr-sm-2 mb-sm-0">Search: </span><input class="form-control" type="text" name="search" [(ngModel)]="filter" >
+
+</div>
+</div>
+<div class="row">
+  <table class="table  table-bordered" style="table-layout: fixed">
+    <thead>
+      <tr>  
+        
+        <th (click)="sort('countryCode')">Country Code
+          <span class="fa fa-sort" *ngIf="key =='countryCode'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <!--<th (click)="sort('departmentCode')">Department Code
+          <span class="fa fa-sort" *ngIf="key =='departmentCode'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>-->
+        <th (click)="sort('countryName')">Country Name
+          <span class="fa fa-sort" *ngIf="key =='countryName'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th style="width: 20%">Edit</th>
+        <th >Calender Definition</th>
+</tr>
+</thead>
+<tbody>
+  <tr *ngFor="let country of countries | async | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+    <td>{{country.countryCode}}</td>
+    <td>{{country.countryName}}</td>
+    <td>
+  <button class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; " (click)="editDetails(country)">
+<i class="fa fa-edit"></i>
+</button>
+</td>
+<td>
+  <button class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; " >
+CALENDAR DEFINITION
+</button>
+</td>
+</tr>
+</tbody>
+
+</table>
+
+<div class="row">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+

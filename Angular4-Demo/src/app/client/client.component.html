@@ -1,0 +1,203 @@
+<!--Add Client Block-->
+<div class="container">
+<div class="card" *ngIf = "showAddClientsDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Add Client</h3>
+    <div class="card-block">
+      <form [formGroup]="clientForm" (ngSubmit)="addClient(clientForm.value)">
+     <div style = "margin : 20px;">
+      <div class="form-inline">
+
+        <table width="100%" style="table-layout: fixed">
+          <tr>
+            <td>Department Name <span style="color: red">*</span>
+                          <select   class= "form-control"  formControlName="departmentName" >                    
+                           <option value="Select" selected="selected">--Select--</option>
+                           <option *ngFor="let departmentlist of departmentDropdown" [value]="departmentlist.departmentName">{{departmentlist.departmentName}}</option>                    
+                         </select>
+                      </td>
+              <!--<input type="text" class="form-control "   formControlName="departmentName"/></td>-->
+            <td>Client Code <span style="color: red">*</span> <input type="text"class="form-control  " formControlName="clientCode"/></td>
+            <td>Client Description <input type="text" class="form-control  "  formControlName="clientDescription"/></td>
+          </tr>
+          <!--<tr>
+            <td></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+              {{departmentCodeError}}
+            </div></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+            {{departmentNameError}}
+          </div></td>
+          </tr>-->
+
+           <tr>
+            <td>Client Name <span style="color: red">*</span> &nbsp;&nbsp; <input type="text" class="form-control  "   formControlName="clientName"/></td>
+            <td>Client Status <span style="color: red">*</span>&nbsp;&nbsp; <select class="form-control " formControlName="clientStatus">
+              <option value="">--Select--</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>              
+              </select></td>            
+          </tr>
+          
+          <tr>            
+              <td>Client Setup Comments  &nbsp;&nbsp; <textarea class="form-control " rows="5" cols="50"  formControlName="clientSetupComments"></textarea></td>
+          </tr>
+           <tr>            
+              <td>Additional Client Information  &nbsp;&nbsp; <textarea class="form-control " rows="5" cols="50"  formControlName="additionalClientInformation"></textarea></td>
+          </tr>
+        </table>
+      </div>
+     </div>
+     
+        <div style="margin-top: 20px;  margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!clientForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        
+     </div>
+        </form>
+      </div>
+    </div>
+
+
+
+
+
+<div class="card" *ngIf = "showEditClientsDetails" style="margin-bottom: 20px;">
+    <h3 class="card-header" style="background-color: #0e5061; font-size: 20px; color: white">Edit Client</h3>
+    <div class="card-block">
+      <form [formGroup]="clientForm" (ngSubmit)="editClientDetails(clientForm.value)">
+     <div style = "margin : 20px;">
+      <div class="form-inline">
+
+        <table width="100%" style="table-layout: fixed">
+          <tr>
+            <td>Department Name <span style="color: red">*</span>
+                          <select   class= "form-control"  formControlName="departmentName" >                    
+                           <option value="Select" selected="selected">--Select--</option>
+                           <option *ngFor="let departmentlist of departmentDropdown" [value]="departmentlist.departmentName">{{departmentlist.departmentName}}</option>                    
+                         </select>
+                      </td>
+            <td>Client Code <span style="color: red">*</span>&nbsp;&nbsp; <input type="text"class="form-control " formControlName="clientCode" disabled/></td>
+            <td>Client Description &nbsp;&nbsp; <input type="text" class="form-control "  formControlName="clientDescription"/></td>
+          </tr>
+          <!--<tr>
+            <td></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentCode'].valid && departmentForm.controls['departmentCode'].touched">
+              {{departmentCodeError}}
+            </div></td>
+            <td><div class="alert alert-danger" *ngIf="!departmentForm.controls['departmentName'].valid && departmentForm.controls['departmentName'].touched">
+            {{departmentNameError}}
+          </div></td>
+          </tr>-->
+
+           <tr>
+            <td>Client Name <span style="color: red">*</span> &nbsp;&nbsp; <input type="text" class="form-control "   formControlName="clientName"/></td>
+            <td>Client Status <span style="color: red">*</span>&nbsp;&nbsp; <select class="form-control  " formControlName="clientStatus">
+              <option value="">--Select--</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>              
+              </select></td>            
+          </tr>
+          
+          <tr>            
+              <td>Client Setup Comments  &nbsp;&nbsp; <textarea class="form-control " rows="5" cols="50"  formControlName="clientSetupComments"></textarea></td>
+          </tr>
+           <tr>            
+              <td>Additional Client Information  &nbsp;&nbsp; <textarea class="form-control " rows="5" cols="50"  formControlName="additionalClientInformation"></textarea></td>
+          </tr>
+        </table>
+      </div>
+     </div>
+     
+        <div style="margin-top: 20px;  margin-left:10px;">
+        <button type="submit" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " [disabled]="!clientForm.valid">Submit
+        </button>
+        <button type="button" class="btn btn-primary"
+                style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin-bottom: 20px " (click)="hideDetails()">Cancel
+        </button>
+        
+     </div>
+        </form>
+      </div>
+    </div>
+
+</div>
+
+
+<!--New Datatable-->
+
+<div class="container">
+  <div class="card ">
+    <div class="card-block">
+      <div class="form-inline">
+      <button type="button" class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; margin :  20px;" (click)="toggleDetails()">Add Client
+</button>
+<span style="margin-left:120px;"><b>Department Name :</b> <select   class= "form-control"  name="departmentValue"  [(ngModel)]="departmentValue" (change)="onDepartmentNameChange()">                    
+                           <option value="Select" selected>--Select--</option>
+                           <option *ngFor="let departmentlist of departmentDropdown" [value]="departmentlist.departmentName">{{departmentlist.departmentName}}</option>                    
+                         </select></span>
+
+      </div>
+
+<div style="margin: 20px;">
+
+
+  <div class="form-inline " style="margin-bottom: 10px; margin-left: 72%">
+Search:<input class="form-control" type="text" name="search" [(ngModel)]="filter" />
+
+</div>
+<div class="row">
+  <table class="table  table-bordered" style="table-layout: fixed">
+    <thead>
+      <tr>  
+        
+        <th (click)="sort('departmentCode')">Department Code
+          <span class="fa fa-sort" *ngIf="key =='departmentCode'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('departmentName')">Department Name
+          <span class="fa fa-sort" *ngIf="key =='departmentName'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('clientCode')">Client Code
+          <span class="fa fa-sort" *ngIf="key =='clientCode'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('clientName')">Client Name
+          <span class="fa fa-sort" *ngIf="key =='clientName'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('clientDescription')">Client Description
+          <span class="fa fa-sort" *ngIf="key =='clientDescription'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>
+        <th (click)="sort('clientSetupComments')">Client Setup Comments
+          <span class="fa fa-sort" *ngIf="key =='clientSetupComments'" [ngClass]="{'fa-sort-asc':reverse,'fa-sort-desc':!reverse}"></span>
+        </th>       
+        <th style="width: 10%">Edit</th>
+</tr>
+</thead>
+<tbody>
+  <tr *ngFor="let client of clients | async | orderBy: key : reverse | filter:filter | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+    <td>{{client.departmentCode}}</td>
+    <td>{{client.departmentName}}</td>
+    <td>{{client.clientCode}}</td>
+    <td>{{client.clientName}}</td>
+    <td>{{client.clientDescription}}</td>
+    <td>{{client.clientSetupComments}}</td>  
+    <td>
+      <button class="btn btn-primary" style="border:3px solid #1a8099; border-radius: 25px; background: #1a8099; " (click)="editDetails(client)">
+      <i class="fa fa-edit"></i>
+</button>
+</td>
+</tr>
+</tbody>
+
+</table>
+<div class="row">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
